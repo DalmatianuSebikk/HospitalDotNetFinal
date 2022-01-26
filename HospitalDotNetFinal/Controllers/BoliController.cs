@@ -10,17 +10,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using JsonApiDotNetCore.Controllers;
+using JsonApiDotNetCore.Configuration;
+using Microsoft.Extensions.Logging;
+using JsonApiDotNetCore.Services;
 
 namespace HospitalDotNetFinal.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/boli/")]
     [ApiController]
-    public class BoliController : ControllerBase
+    public class BoliController : JsonApiController<Boala>
     {
         /*private readonly AppDbContext _context; // baza de date adusa in proiectul nostru, clasa reprezentativa*/
         private readonly IBoalaRepository _boalaRepo;
         private readonly IBoalaManager _boalaManager;
-        public BoliController(IBoalaRepository boalaRepo, IBoalaManager boalaManager)
+        public BoliController(
+            IBoalaRepository boalaRepo, 
+            IBoalaManager boalaManager, 
+            IJsonApiOptions jsonOptions, 
+            ILoggerFactory loggerFactory,
+            IResourceService<Boala, int> resourceService
+            /*IGetAllService<Boala, int> getAllService*/
+            ) : base(jsonOptions, loggerFactory, resourceService)
         {
             _boalaRepo = boalaRepo;
             _boalaManager = boalaManager;
@@ -40,7 +51,7 @@ namespace HospitalDotNetFinal.Controllers
             return Ok(NoContent());*//*
         }*/
 
-        [HttpGet] 
+        /*[HttpGet] 
         public async Task<IActionResult> GetModify()
         {
             var list = await _boalaManager.ModifyBoala();
@@ -61,7 +72,7 @@ namespace HospitalDotNetFinal.Controllers
             {
                 return BadRequest($"A aparut o eroare.: {ex}");
             }
-        }
+        }*/
     }
 
     

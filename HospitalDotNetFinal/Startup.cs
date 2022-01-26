@@ -2,6 +2,7 @@ using HospitalDotNetFinal.BLL.Interfaces;
 using HospitalDotNetFinal.BLL.Managers;
 using HospitalDotNetFinal.DAL;
 using HospitalDotNetFinal.DAL.Repositories;
+using JsonApiDotNetCore.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,10 +36,12 @@ namespace HospitalDotNetFinal
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            
             services.AddTransient<IBoalaRepository, BoalaRepository>();
             services.AddTransient<IBoalaManager, BoalaManager>();
             // unde am adaugat connection stringul
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ConnString")));
+            services.AddJsonApi<AppDbContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalDotNetFinal", Version = "v1" });
@@ -54,13 +57,13 @@ namespace HospitalDotNetFinal
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalDotNetFinal v1"));
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseJsonApi();
 
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

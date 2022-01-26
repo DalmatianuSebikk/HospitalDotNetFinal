@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace HospitalDotNetFinal.BLL.Managers
@@ -17,17 +18,18 @@ namespace HospitalDotNetFinal.BLL.Managers
         {
             _boalaRepo = boalaRepo;
         }
-        public async Task<List<string>> ModifyBoala()
+        public async Task<string> ModifyBoala()
         {
             var boli = await _boalaRepo.GetAll();
             var list = new List<string>();
 
-            foreach(var boala in boli)
+            foreach (var boala in boli)
             {
-                list.Add($"Id-ul Bolii: {boala.Id}, Numele Bolii: {boala.NumeBoala}");
+                list.Add($"Id: {boala.Id}, NumeBoala: {boala.NumeBoala}, Gravitate: {boala.Gravitate}");
             }
 
-            return list;
+            var json = JsonSerializer.Serialize(list);
+            return json;
         }
 
         public async Task CreateBoala(Boala boala)
