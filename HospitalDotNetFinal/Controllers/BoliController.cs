@@ -19,46 +19,64 @@ namespace HospitalDotNetFinal.Controllers
 {
     [Route("api/boli/")]
     [ApiController]
-    public class BoliController : JsonApiController<Boala>
+    public class BoliController : ControllerBase /*JsonApiController<Boala>*/
     {
         /*private readonly AppDbContext _context; // baza de date adusa in proiectul nostru, clasa reprezentativa*/
         private readonly IBoalaRepository _boalaRepo;
         private readonly IBoalaManager _boalaManager;
         public BoliController(
             IBoalaRepository boalaRepo, 
-            IBoalaManager boalaManager, 
-            IJsonApiOptions jsonOptions, 
-            ILoggerFactory loggerFactory,
-            IResourceService<Boala, int> resourceService
+            IBoalaManager boalaManager
+            /* IJsonApiOptions jsonOptions,
+             ILoggerFactory loggerFactory,
+             IResourceService<Boala, int> resourceService*/
             /*IGetAllService<Boala, int> getAllService*/
-            ) : base(jsonOptions, loggerFactory, resourceService)
+            ) /*: base(jsonOptions, loggerFactory, resourceService)*/
         {
             _boalaRepo = boalaRepo;
             _boalaManager = boalaManager;
         }
 
-        /*[HttpPost("addBoala")]
+        [HttpPost] // ca sa fie RESTful
         public async Task<IActionResult> AddBoala([FromBody] Boala boala)
         {
-           *//* if(string.IsNullOrEmpty(boala.Gravitate) && string.IsNullOrEmpty(boala.NumeBoala))
+            if (string.IsNullOrEmpty(boala.Gravitate) && string.IsNullOrEmpty(boala.NumeBoala))
             {
                 return BadRequest("Fie campul Gravitate, fie campul NumeBoala este null.");
             }
 
-            await _context.Boli.AddAsync(boala);
-            await _context.SaveChangesAsync();
+            /*await _context.Boli.AddAsync(boala);
+            await _context.SaveChangesAsync();*/
 
-            return Ok(NoContent());*//*
-        }*/
+            await _boalaManager.CreateBoala(boala);
 
-        /*[HttpGet] 
+            return NoContent();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetModify()
         {
             var list = await _boalaManager.ModifyBoala();
             return Ok(list);
         }
 
-        [HttpPost]
+        [HttpPut]
+        public async Task<IActionResult> UpdateBoli([FromBody] Boala boala)
+        {
+            await _boalaManager.UpdateBoala(boala);
+
+            return Ok(boala);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteBoala([FromBody] Boala boala)
+        {
+            await _boalaManager.DeleteBoala(boala);
+
+            return NoContent();
+        }
+
+        /*[HttpPost]
         public async Task<IActionResult> addBoala([FromBody] Boala boala)
         {
             // apelez boalaManager

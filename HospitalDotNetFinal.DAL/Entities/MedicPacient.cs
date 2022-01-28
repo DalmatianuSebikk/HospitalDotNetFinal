@@ -8,6 +8,17 @@ namespace HospitalDotNetFinal.DAL.Entities
 {
     public class MedicPacient
     {
+        public MedicPacient(int v1, int v2)
+        {
+            MedicId = v1;
+            PacientId = v2;
+        }
+
+        public MedicPacient()
+        {
+
+        }
+
         public int Id { get; set; }
         public int MedicId { get; set; }
         public int PacientId { get; set; }

@@ -38,7 +38,7 @@ namespace HospitalDotNetFinal.DAL.Repositories
         public async Task<List<Boala>> GetAll()
         {
             
-            var boli = await (await GetQuery()).ToListAsync(); // wtf? (altfel nu mergea)
+            var boli = await (await GetQuery()).ToListAsync(); // ????? (altfel nu mergea)
             return boli;
         }
 

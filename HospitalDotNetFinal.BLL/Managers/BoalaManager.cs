@@ -18,18 +18,18 @@ namespace HospitalDotNetFinal.BLL.Managers
         {
             _boalaRepo = boalaRepo;
         }
-        public async Task<string> ModifyBoala()
+        public async Task<List<Boala>> ModifyBoala()
         {
             var boli = await _boalaRepo.GetAll();
-            var list = new List<string>();
+            /*var list = new List<string>();
 
             foreach (var boala in boli)
             {
                 list.Add($"Id: {boala.Id}, NumeBoala: {boala.NumeBoala}, Gravitate: {boala.Gravitate}");
-            }
+            }*/
 
-            var json = JsonSerializer.Serialize(list);
-            return json;
+            
+            return boli;
         }
 
         public async Task CreateBoala(Boala boala)

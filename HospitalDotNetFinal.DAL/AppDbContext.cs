@@ -7,10 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalDotNetFinal.DAL
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<
+        User,
+        Role,
+        int,
+        IdentityUserClaim<int>,
+        UserRole,
+        IdentityUserLogin<int>,
+        IdentityRoleClaim<int>,
+        IdentityUserToken<int>
+        >
     {
         // facem constructor
 
@@ -23,6 +34,7 @@ namespace HospitalDotNetFinal.DAL
         public DbSet<Oras> Orase { get; set; }
         public DbSet<Pacient> Pacienti { get; set; }
         public DbSet<Medic> Medici { get; set; }
+        public DbSet<MedicPacient> MediciPacienti { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

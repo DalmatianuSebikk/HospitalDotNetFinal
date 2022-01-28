@@ -9,7 +9,7 @@ namespace HospitalDotNetFinal.BLL.Interfaces
 {
     public interface IBoalaManager
     {
-        Task<string> ModifyBoala();
+        Task<List<Boala>> ModifyBoala();
         Task<List<Boala>> GetAllBoli();
         Task CreateBoala (Boala boala);
         Task UpdateBoala (Boala boala);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalDotNetFinal.DAL.Entities
 {
+    [Resource("medici")]
     public class Medic : Identifiable<int>
     {
         [Attr]

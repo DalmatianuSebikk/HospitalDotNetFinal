@@ -4,14 +4,16 @@ using HospitalDotNetFinal.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalDotNetFinal.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220127001044_AddedUserAndRoleIdentity")]
+    partial class AddedUserAndRoleIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace HospitalDotNetFinal.DAL.Migrations
 
                     b.HasIndex("PacientId");
 
-                    b.ToTable("MediciPacienti");
+                    b.ToTable("MedicPacient");
                 });
 
             modelBuilder.Entity("HospitalDotNetFinal.DAL.Entities.Oras", b =>
