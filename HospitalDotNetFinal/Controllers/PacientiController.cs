@@ -23,7 +23,7 @@ namespace HospitalDotNetFinal.Controllers
 
         
         [HttpGet]
-        [Authorize("Admin")]
+        /*[Authorize("Admin")]*/
         public async Task<IActionResult> GetPacienti()
         {
             var pacienti = await _pacientManager.GetAllPacienti();

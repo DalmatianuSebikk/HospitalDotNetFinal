@@ -34,7 +34,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         
-        [HttpGet("/{id}")]
+        /*[HttpGet("/{id}")]
         [Authorize("Admin")]
         public override Task<IActionResult> GetAsync([FromRoute] int id, CancellationToken cancellationToken)
         {
@@ -46,6 +46,7 @@ namespace HospitalDotNetFinal.Controllers
         public override Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
             return base.GetAsync(cancellationToken);
-        }
+        }*/
+
     }
 }
