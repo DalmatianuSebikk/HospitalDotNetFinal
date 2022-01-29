@@ -3,6 +3,7 @@ using HospitalDotNetFinal.DAL.Entities;
 using JsonApiDotNetCore.Configuration;
 using JsonApiDotNetCore.Controllers;
 using JsonApiDotNetCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -43,6 +44,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpPost]
+        [Authorize("Admin")]
         public async Task<IActionResult> PostMedic([FromBody] Medic medic)
         {
             if (string.IsNullOrEmpty(medic.NumeMedic) && string.IsNullOrEmpty(medic.NumarDeTelefon))
@@ -55,6 +57,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpPut]
+        [Authorize("Admin")]
         public async Task<IActionResult> UpdateMedic([FromBody] Medic medic)
         {
 
@@ -63,6 +66,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpDelete]
+        [Authorize("Admin")]
         public async Task<IActionResult> DeleteMedic([FromBody] Medic medic)
         {
             await _medicManager.DeleteMedic(medic);

@@ -1,6 +1,7 @@
 ﻿using HospitalDotNetFinal.BLL.Interfaces;
 using HospitalDotNetFinal.BLL.Managers;
 using HospitalDotNetFinal.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,6 +29,7 @@ namespace HospitalDotNetFinal.Controllers.Medici
 
         }*/
         [HttpPost("/{pacientId}")]
+        [Authorize("Admin")]
         public async Task<IActionResult> AddPacientToMedic([FromRoute] int medicId, [FromQuery] int pacientId)
         {
             MedicPacient medicPacient = new MedicPacient(
@@ -39,6 +41,7 @@ namespace HospitalDotNetFinal.Controllers.Medici
         }
 
         [HttpPut]
+        [Authorize("Admin")]
         public async Task<IActionResult> TransferPacientToMedic([FromRoute] int medicId, [FromQuery] int newMedicId, [FromQuery] int pacientId)
         {
             var medicPacient = await _medicipacientiManager.GetMedicPacient(medicId, pacientId);
@@ -49,6 +52,7 @@ namespace HospitalDotNetFinal.Controllers.Medici
         }
 
         [HttpDelete]
+        [Authorize("Admin")]
         public async Task<IActionResult> DeletePacientToMedic([FromRoute] int medicId, [FromQuery] int pacientId)
         {
             var medicPacient = await _medicipacientiManager.GetMedicPacient(medicId, pacientId);

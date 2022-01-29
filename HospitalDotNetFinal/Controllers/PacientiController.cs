@@ -1,5 +1,6 @@
 ﻿using HospitalDotNetFinal.BLL.Interfaces;
 using HospitalDotNetFinal.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,7 +21,9 @@ namespace HospitalDotNetFinal.Controllers
             _pacientManager = pacientManager;
         }
 
+        
         [HttpGet]
+        [Authorize("Admin")]
         public async Task<IActionResult> GetPacienti()
         {
             var pacienti = await _pacientManager.GetAllPacienti();
@@ -28,6 +31,8 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpPost]
+
+        [Authorize("Admin")]
         public async Task<IActionResult> PostPacient([FromBody] Pacient pacient)
         {
             await _pacientManager.CreatePacient(pacient);
@@ -35,6 +40,7 @@ namespace HospitalDotNetFinal.Controllers
             return NoContent();
         }
         [HttpPut]
+        [Authorize("Admin")]
         public async Task<IActionResult> UpdatePacient([FromBody] Pacient pacient)
         {
             await _pacientManager.UpdatePacient(pacient);

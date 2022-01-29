@@ -21,6 +21,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -71,7 +72,7 @@ namespace HospitalDotNetFinal
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
-            services
+            /*services
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -93,7 +94,23 @@ namespace HospitalDotNetFinal
                         ValidateAudience = false
                     };
 
-                    options.Events = new JwtBearerEvents
+                    
+                options.Events = new List<JwtBearerEvents>
+                {
+                    new JwtBearerEvents
+                    {
+
+                        OnTokenValidated = context =>
+                        { 
+                            var appIdentity = new ClaimsIdentity(claims,
+                            JwtBearerDefaults.AuthenticationScheme);
+                            context.Principal.AddIdentity(appIdentity);
+
+                            return Task.CompletedTask;
+                        }
+                    },
+
+                    new JwtBearerEvents
                     {
                         OnAuthenticationFailed = context =>
                         {
@@ -103,8 +120,54 @@ namespace HospitalDotNetFinal
                             }
                             return Task.CompletedTask;
                         }
+                    }
+                };
+                });*/
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer("AuthScheme", options =>
+                {
+                    options.RequireHttpsMetadata = true;
+                    options.SaveToken = true;
+                    var secret = Configuration.GetSection("Jwt").GetSection("Token").Get<String>();
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        RequireExpirationTime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = context =>
+                        {
+                            if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                            {
+                                context.Response.Headers.Add("Token-Expired", "true");
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
                 });
+
+            services.AddAuthorization(options =>
+            {
+
+                options.AddPolicy("Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Admin").RequireAuthenticatedUser().AddAuthenticationSchemes("AuthScheme").Build();
+                        /*authBuilder.RequireRole("Guest").RequireAuthenticatedUser().AddAuthenticationSchemes("AuthScheme").Build();*/
+                    });
+
+            });
 
         }
 

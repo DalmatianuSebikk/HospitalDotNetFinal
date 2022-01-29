@@ -14,6 +14,7 @@ using JsonApiDotNetCore.Controllers;
 using JsonApiDotNetCore.Configuration;
 using Microsoft.Extensions.Logging;
 using JsonApiDotNetCore.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalDotNetFinal.Controllers
 {
@@ -38,6 +39,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpPost] // ca sa fie RESTful
+        [Authorize("Admin")]
         public async Task<IActionResult> AddBoala([FromBody] Boala boala)
         {
             if (string.IsNullOrEmpty(boala.Gravitate) && string.IsNullOrEmpty(boala.NumeBoala))
@@ -61,6 +63,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpPut]
+        [Authorize("Admin")]
         public async Task<IActionResult> UpdateBoli([FromBody] Boala boala)
         {
             await _boalaManager.UpdateBoala(boala);
@@ -69,6 +72,7 @@ namespace HospitalDotNetFinal.Controllers
         }
 
         [HttpDelete]
+        [Authorize("Admin")]
         public async Task<IActionResult> DeleteBoala([FromBody] Boala boala)
         {
             await _boalaManager.DeleteBoala(boala);
