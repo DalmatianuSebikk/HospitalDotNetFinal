@@ -37,9 +37,9 @@ namespace HospitalDotNetFinal.BLL.Managers
             await _boalaRepo.Create(boala);
         }
 
-        public async Task DeleteBoala(Boala boala)
+        public async Task DeleteBoala(int id)
         {
-            await _boalaRepo.Delete(boala);
+            await _boalaRepo.Delete(id);
         }
 
         public async Task UpdateBoala(Boala boala)

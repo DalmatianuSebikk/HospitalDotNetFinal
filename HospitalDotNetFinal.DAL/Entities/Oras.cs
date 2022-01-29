@@ -17,6 +17,7 @@ namespace HospitalDotNetFinal.DAL.Entities
         public string NumeOras { get; set; }
         [Attr]
         public int LocuitoriOras { get; set; }
+        public int SpitalId { get; set; }
         public virtual Spital Spital { get; set; }
     }
 }

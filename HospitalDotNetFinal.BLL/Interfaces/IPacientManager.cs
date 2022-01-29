@@ -11,8 +11,9 @@ namespace HospitalDotNetFinal.BLL.Interfaces
     {
         Task<List<Pacient>> ModifyPacient();
         Task<List<Pacient>> GetAllPacienti();
+        Task<Pacient> GetById(int id);
         Task CreatePacient(Pacient pacient);
         Task UpdatePacient(Pacient pacient);
-        Task DeletePacient(Pacient pacient);
+        Task DeletePacient(int id);
     }
 }

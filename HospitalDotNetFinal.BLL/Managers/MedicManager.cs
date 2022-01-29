@@ -22,9 +22,9 @@ namespace HospitalDotNetFinal.BLL.Managers
             await _medicRepo.Create(medic);
         }
 
-        public async Task DeleteMedic(Medic medic)
+        public async Task DeleteMedic(int id)
         {
-            await _medicRepo.Delete(medic);
+            await _medicRepo.Delete(id);
         }
 
         public async Task<List<Medic>> GetAllMedici()

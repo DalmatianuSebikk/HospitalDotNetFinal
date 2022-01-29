@@ -30,6 +30,14 @@ namespace HospitalDotNetFinal.Controllers
             return Ok(pacienti);
         }
 
+        // pacienti/id [fromRoute] sau vreau pacienti/?id=1 [fromQuery]
+        [HttpGet("{id}")] 
+        public async Task<IActionResult> GetPacientById([FromRoute] int id)
+        {
+            var pacient = await _pacientManager.GetById(id);
+            return Ok(pacient);
+        }
+
         [HttpPost]
 
         [Authorize("Admin")]
@@ -44,7 +52,15 @@ namespace HospitalDotNetFinal.Controllers
         public async Task<IActionResult> UpdatePacient([FromBody] Pacient pacient)
         {
             await _pacientManager.UpdatePacient(pacient);
-            return Ok(pacient);
+            return Ok("Modificat.");
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize("Admin")]
+        public async Task<IActionResult> DeletePacient([FromRoute] int id)
+        {
+            await _pacientManager.DeletePacient(id);
+            return Ok("Sters.");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace HospitalDotNetFinal.DAL.Repositories
         Task<Medic> GetById(int id);
         Task Create(Medic medic);
         Task Update(Medic medic);
-        Task Delete(Medic medic);
+        Task Delete(int id);
 
         Task<IQueryable<Medic>> GetQuery();
 

@@ -71,11 +71,11 @@ namespace HospitalDotNetFinal.Controllers
             return Ok(boala);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize("Admin")]
-        public async Task<IActionResult> DeleteBoala([FromBody] Boala boala)
+        public async Task<IActionResult> DeleteBoala([FromRoute] int id)
         {
-            await _boalaManager.DeleteBoala(boala);
+            await _boalaManager.DeleteBoala(id);
 
             return NoContent();
         }

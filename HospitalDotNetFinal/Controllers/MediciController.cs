@@ -65,11 +65,12 @@ namespace HospitalDotNetFinal.Controllers
             return Ok(medic);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
+
         [Authorize("Admin")]
-        public async Task<IActionResult> DeleteMedic([FromBody] Medic medic)
+        public async Task<IActionResult> DeleteMedic([FromRoute] int id)
         {
-            await _medicManager.DeleteMedic(medic);
+            await _medicManager.DeleteMedic(id);
             return NoContent();
         }
 

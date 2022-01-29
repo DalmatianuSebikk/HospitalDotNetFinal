@@ -22,15 +22,16 @@ namespace HospitalDotNetFinal.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Pacient pacient)
+        public async Task Delete(int id)
         {
+            var pacient = await _context.Pacienti.FirstOrDefaultAsync(pacient => pacient.Id == id);
             _context.Pacienti.Remove(pacient);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Pacient> GetById(int id)
         {
-            var pacient = await _context.Pacienti.FindAsync(id);
+            var pacient = await _context.Pacienti.Include(pacient => pacient.Boala).FirstOrDefaultAsync(pacient => pacient.Id == id);
             return pacient;
         }
 
@@ -48,6 +49,7 @@ namespace HospitalDotNetFinal.DAL.Repositories
 
         public async Task Update(Pacient pacient)
         {
+            /*var pacient = await _context.Pacienti.FirstOrDefaultAsync(pacient => pacient.Id == id);*/
             _context.Pacienti.Update(pacient);
             await _context.SaveChangesAsync();
         }

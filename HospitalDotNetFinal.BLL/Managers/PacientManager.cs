@@ -23,9 +23,9 @@ namespace HospitalDotNetFinal.BLL.Managers
             await _pacientRepo.Create(pacient);
         }
 
-        public async Task DeletePacient(Pacient pacient)
+        public async Task DeletePacient(int id)
         {
-            await _pacientRepo.Delete(pacient);
+            await _pacientRepo.Delete(id);
         }
 
         public async Task<List<Pacient>> GetAllPacienti()
@@ -35,6 +35,12 @@ namespace HospitalDotNetFinal.BLL.Managers
             return pacienti;
         }
 
+        public async Task<Pacient> GetById(int id)
+        {
+            var pacient = await _pacientRepo.GetById(id);
+
+            return pacient;
+        }
         public Task<List<Pacient>> ModifyPacient()
         {
             throw new NotImplementedException();

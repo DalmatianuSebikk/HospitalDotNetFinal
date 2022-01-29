@@ -13,7 +13,7 @@ namespace HospitalDotNetFinal.BLL.Interfaces
         Task<List<Boala>> GetAllBoli();
         Task CreateBoala (Boala boala);
         Task UpdateBoala (Boala boala);
-        Task DeleteBoala (Boala boala);
+        Task DeleteBoala (int id);
 
     }
 }

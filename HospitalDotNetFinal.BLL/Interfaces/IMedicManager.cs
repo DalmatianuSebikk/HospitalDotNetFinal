@@ -13,6 +13,6 @@ namespace HospitalDotNetFinal.BLL.Interfaces
         Task<List<Medic>> GetAllMedici();
         Task CreateMedic(Medic medic);
         Task UpdateMedic(Medic medic);
-        Task DeleteMedic(Medic medic);
+        Task DeleteMedic(int id);
     }
 }
