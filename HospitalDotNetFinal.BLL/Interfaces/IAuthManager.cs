@@ -11,5 +11,6 @@ namespace HospitalDotNetFinal.BLL.Interfaces
     {
         Task<bool> Register(RegisterModel registerModel);
         Task<LoginResult> Login(LoginModel loginModel);
+        Task<String> Refresh(RefreshModel refreshModel);
     }
 }

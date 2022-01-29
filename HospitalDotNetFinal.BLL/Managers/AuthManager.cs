@@ -42,10 +42,14 @@ namespace HospitalDotNetFinal.BLL.Managers
                 if(result.Succeeded)
                 {
                     var token = await _tokenHelper.CreateAccessToken(user);
+                    var refreshToken = _tokenHelper.CreateRefreshToken();
+                    user.RefreshToken = refreshToken;
+                    await _userManager.UpdateAsync(user);
                     return new LoginResult
                     {
                         Success = true,
-                        AccessToken = token
+                        AccessToken = token,
+                        RefreshToken = refreshToken
                     };
                 }
                 else
@@ -68,7 +72,7 @@ namespace HospitalDotNetFinal.BLL.Managers
 
             var result = await _userManager.CreateAsync(user, registerModel.Password);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, registerModel.Role);
                 return true;
@@ -77,6 +81,21 @@ namespace HospitalDotNetFinal.BLL.Managers
             {
                 return false;
             }
+        }
+
+        public async Task<string> Refresh(RefreshModel refreshModel)
+        {
+            var principal = _tokenHelper.GetPrincipalFromExpiredToken(refreshModel.AccessToken);
+            var username = principal.Identity.Name;
+
+            var user = await _userManager.FindByEmailAsync(username);
+
+            if (user.RefreshToken != refreshModel.RefreshToken)
+                return "Bad Refresh";
+
+            var newJwtToken = await _tokenHelper.CreateAccessToken(user);
+
+            return newJwtToken;
         }
     }
 }

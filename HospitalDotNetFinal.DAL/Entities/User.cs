@@ -9,6 +9,7 @@ namespace HospitalDotNetFinal.DAL.Entities
 {
    public class User : IdentityUser<int>
     {
+        public string RefreshToken { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

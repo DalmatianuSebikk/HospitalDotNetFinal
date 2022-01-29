@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HospitalDotNetFinal.BLL.Models
 {
-    public class LoginResult
+    public class RefreshModel
     {
-        public bool Success { get; set; }
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
+
     }
 }

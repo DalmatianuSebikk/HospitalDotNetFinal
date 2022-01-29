@@ -34,5 +34,12 @@ namespace HospitalDotNetFinal.Controllers
             return result.Success ? Ok(result) : BadRequest("Failed to login");
         }
 
+        [HttpPost("Refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshModel refreshModel)
+        {
+            var result = await _authManager.Refresh(refreshModel);
+            return !result.Contains("bad") ? Ok(result) : BadRequest("Failed to refresh");
+        }
+
     }
 }
