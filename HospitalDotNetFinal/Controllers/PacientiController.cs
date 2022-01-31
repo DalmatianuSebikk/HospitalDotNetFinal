@@ -52,15 +52,16 @@ namespace HospitalDotNetFinal.Controllers
         public async Task<IActionResult> UpdatePacient([FromBody] Pacient pacient)
         {
             await _pacientManager.UpdatePacient(pacient);
-            return Ok("Modificat.");
+            return NoContent();
         }
+        
 
         [HttpDelete("{id}")]
         [Authorize("Admin")]
         public async Task<IActionResult> DeletePacient([FromRoute] int id)
         {
             await _pacientManager.DeletePacient(id);
-            return Ok("Sters.");
+            return NoContent();
         }
     }
 }

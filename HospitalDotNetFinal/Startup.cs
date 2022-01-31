@@ -29,6 +29,7 @@ namespace HospitalDotNetFinal
 {
     public class Startup
     {
+        public string SpecificOrigins = "_allowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,6 +40,15 @@ namespace HospitalDotNetFinal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: SpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("localhost:4200", "http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                                  });
+            });
+
 
             services.AddControllers()
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -184,6 +194,7 @@ namespace HospitalDotNetFinal
             app.UseHttpsRedirection();
             app.UseDeveloperExceptionPage();
             app.UseRouting();
+            app.UseCors(SpecificOrigins);
             app.UseJsonApi();
 
             app.UseAuthorization();

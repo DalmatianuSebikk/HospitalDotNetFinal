@@ -25,6 +25,9 @@ namespace HospitalDotNetFinal.DAL.Repositories
         public async Task Delete(int id)
         {
             var pacient = await _context.Pacienti.FirstOrDefaultAsync(pacient => pacient.Id == id);
+            //var mediciPacienti = await _context.MediciPacienti.FirstOrDefaultAsync(mediciPacienti => mediciPacienti.PacientId == id);
+
+            // _context.MediciPacienti.Remove(mediciPacienti);
             _context.Pacienti.Remove(pacient);
             await _context.SaveChangesAsync();
         }
